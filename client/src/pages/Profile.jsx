@@ -4,7 +4,7 @@ import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/
 import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSnackbar } from "notistack";
 
 const Profile = () => {
@@ -186,13 +186,26 @@ const Profile = () => {
           className="p-3 border rounded-lg"
           onChange={handleChange}
         />
-        <button disabled={loading} className="p-3 rounded-lg bg-slate-700 text-white uppercase hover:opacity-95 disabled:opacity-80">
-          {loading ? 'Loading...' : 'Update'}
+        <button
+          disabled={loading}
+          className="p-3 rounded-lg bg-slate-700 text-white uppercase hover:opacity-95 disabled:opacity-80"
+        >
+          {loading ? "Loading..." : "Update"}
         </button>
+        <Link
+          className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
+          to={"/create-listing"}
+        >
+          Create Listing
+        </Link>
       </form>
       <div className="flex justify-between mt-5">
-        <span onClick={handleDelete} className="text-red-700 cursor-pointer">Delete Account</span>
-        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign Out</span>
+        <span onClick={handleDelete} className="text-red-700 cursor-pointer">
+          Delete Account
+        </span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">
+          Sign Out
+        </span>
       </div>
       {/* <p className="text-red-700 mt-5 text-center">{error ? error : ""}</p>
       <p className="text-green-700 mt-5 text-center">{success ? 'Updated succesfully.' : ""}</p> */}
