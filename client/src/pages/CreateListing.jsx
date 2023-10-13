@@ -6,10 +6,12 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../firebase.js";
+import { useSnackbar } from "notistack";
 
 export default function CreateListing() {
   const [files, setFiles] = useState([]);
   const [uploading,setUploading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({
     imageUrls: [],
   });
@@ -27,14 +29,23 @@ export default function CreateListing() {
           ...formData,
           imageUrls: formData.imageUrls.concat(urls),
         });
-        setImageUploadError(false);
+        // setImageUploadError(false);
+        enqueueSnackbar(`${files.length} ${files.length === 1 ? 'image' : 'images' } succesfully uploaded.`, {
+          variant: "success",
+        });
         setUploading(false);
       }).catch((err)=>{
-        setImageUploadError('Image upload failed. (2MB max per image)');
+        // setImageUploadError('Image upload failed. (2MB max per image)');
+        enqueueSnackbar("Image upload failed. (2MB max per image)", {
+          variant: "error",
+        });
         setUploading(false);
       })
     } else{
-      setImageUploadError('Please upload an image. (Max of 6 images)')
+      // setImageUploadError('Please upload an image. (Max of 6 images)')
+      enqueueSnackbar("Image upload failed. (2MB max per image)", {
+        variant: "error",
+      });
       setUploading(false);
     }
   };
@@ -196,9 +207,9 @@ export default function CreateListing() {
               {uploading ? 'Uploading...' : 'Upload'}
             </button>
           </div>
-          <p className="text-red-700 text-sm">
+          {/* <p className="text-red-700 text-sm">
             {imageUploadError && imageUploadError}
-          </p>
+          </p> */}
           {formData.imageUrls.length > 0 &&
             formData.imageUrls.map((url, index) => (
               <div key={url} className="flex justify-between p-3 border items-center">
