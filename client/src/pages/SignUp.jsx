@@ -48,8 +48,10 @@ const SignUp = () => {
   }
   console.log(formData);
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
+    <div className="p-3 max-w-lg mx-auto mt-5">
+      <h1 className="text-3xl text-center font-semibold my-7 dark:text-white">
+        Sign Up
+      </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
@@ -72,13 +74,16 @@ const SignUp = () => {
           id="password"
           onChange={handleChange}
         />
-        <button disabled={loading} className="border p-3 rounded-lg bg-slate-700 text-white uppercase hover:opacity-95 disabled:opacity-80 border-none outline-none">
+        <button
+          disabled={loading}
+          className="border p-3 rounded-lg bg-slate-700 text-white uppercase hover:opacity-95 disabled:opacity-80 border-none outline-none"
+        >
           {loading ? "Loading..." : "Sign Up"}
         </button>
-        <OAuth/>
+        <OAuth />
       </form>
       <div className="flex gap-2 mt-5 justify-center items-center">
-        <p>Have an account?</p>
+        <p className="dark:text-white">Have an account?</p>
         <Link to="/sign-in">
           <span className="text-blue-700">Sign In.</span>
         </Link>

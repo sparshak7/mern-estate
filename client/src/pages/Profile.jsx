@@ -39,10 +39,16 @@ const Profile = () => {
       },
       (error) => {
         setFileUploadError(true);
+        enqueueSnackbar("Please upload a valid image file. (Less than 2MB)", {
+          variant: "error",
+        });
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setFormData({ ...formData, avatar: downloadURL });
+        });
+        enqueueSnackbar("Image uploaded succesfully.", {
+          variant: "success",
         });
       }
     );
@@ -127,7 +133,7 @@ const Profile = () => {
   }
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-center text-3xl font-semibold my-7">
+      <h1 className="text-center text-3xl font-semibold my-7 dark:text-white">
         Profile Details
       </h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
@@ -144,7 +150,7 @@ const Profile = () => {
           alt="profile"
           className="rounded-full w-24 h-24 object-cover cursor-pointer self-center mt-2"
         />
-        <p className="text-sm self-center">
+        {/* <p className="text-sm self-center">
           {fileUploadError ? (
             <span className="text-red-700">
               Please upload an image file. (Image must be less than 2 mb)
@@ -156,7 +162,7 @@ const Profile = () => {
           ) : (
             ""
           )}
-        </p>
+        </p> */}
         <input
           type="text"
           id="username"

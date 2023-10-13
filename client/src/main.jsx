@@ -10,7 +10,7 @@ import { SnackbarProvider } from "notistack"
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <SnackbarProvider autoHideDuration={1500}>
+      <SnackbarProvider autoHideDuration={2000}>
         <App />
       </SnackbarProvider>
     </PersistGate>

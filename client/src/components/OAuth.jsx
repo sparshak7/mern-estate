@@ -29,7 +29,7 @@ const OAuth = () => {
     }
   }
   return (
-    <button type='button' onClick={handleGoogleClick} className="border p-3 rounded-lg bg-red-700 text-white uppercase hover:opacity-95 disabled:opacity-80 border-none outline-none">
+    <button type='button' onClick={handleGoogleClick} className="border p-3 rounded-lg bg-red-700 text-white uppercase hover:opacity-95 disabled:opacity-80 border-none outline-none dark:bg-red-900">
       Continue with Google
     </button>
   );

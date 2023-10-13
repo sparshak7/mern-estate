@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const {currentUser} = useSelector(state => state.user);
   return (
-    <header className="bg-[#F3E1E1] shadow-md dark:bg-[#212121]">
+    <header className="bg-transparent shadow-md dark:bg-transparent">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
           <h1 className="font-bold text-sm sm:text-xl flex flex-wrap">
@@ -30,7 +30,15 @@ const Header = () => {
             <li className="hidden sm:inline hover:underline">About</li>
           </Link>
           <Link to="/profile">
-            {currentUser ? (<img className='h-7 w-7 rounded-full object-cover' src={currentUser.avatar} alt="" />) : (<li className="hover:underline">Sign In</li>)}
+            {currentUser ? (
+              <img
+                className="h-7 w-7 rounded-full object-cover"
+                src={currentUser.avatar}
+                alt=""
+              />
+            ) : (
+              <li className="hover:underline">Sign In</li>
+            )}
           </Link>
           <li>
             <Switcher />
