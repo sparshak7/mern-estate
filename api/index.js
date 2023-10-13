@@ -19,7 +19,7 @@ const app=express();
 const port=3000;
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/listing", listingRouter);
+
 
 app.listen(port, ()=>{
   console.log(`Server running at port ${port}`);
@@ -27,6 +27,8 @@ app.listen(port, ()=>{
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
+
 
 app.use((err,req,res,next)=>{
   const statusCode = err.statusCode || 500;
