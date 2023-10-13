@@ -1,11 +1,13 @@
 import {useState} from 'react'
 import { Link, useNavigate } from "react-router-dom"
 import OAuth from '../components/OAuth';
+import { useSnackbar } from 'notistack';
 
 const SignUp = () => {
   const [formData,setFormData] = useState({});
   const [error,setError] = useState(null);
   const [loading,setLoading] = useState(false);
+  const {enqueueSnackbar} = useSnackbar();
   const navigate=useNavigate();
   const handleChange = (e)=>{
     setFormData({
@@ -28,11 +30,17 @@ const SignUp = () => {
       if (data.success === false) {
         setError(data.message);
         setLoading(false);
+        enqueueSnackbar("There was an error signing up. Try again.", {
+          variant: "error",
+        });
         return;
       }
       setLoading(false);
       setError(null);
       navigate("/sign-in");
+      enqueueSnackbar("Succesfully registered.", {
+        variant: "success",
+      });
     } catch (error) {
       setLoading(false);
       setError(error.message);
@@ -75,7 +83,7 @@ const SignUp = () => {
           <span className="text-blue-700">Sign In.</span>
         </Link>
       </div>
-      {error && <p className='text-red-500 mt-5 text-center'>{error}</p>}
+      {/* {error && <p className='text-red-500 mt-5 text-center'>{error}</p>} */}
     </div>
   );
 }

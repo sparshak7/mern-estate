@@ -5,6 +5,7 @@ import { app } from "../firebase";
 import { updateUserStart, updateUserSuccess, updateUserFailure, deleteUserFailure, deleteUserStart, deleteUserSuccess, signOutUserFailure, signOutUserStart, signOutUserSuccess } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 const Profile = () => {
   const {currentUser, loading, error} = useSelector(state => state.user);
@@ -15,7 +16,8 @@ const Profile = () => {
   const [formData, setFormData] = useState({});
   const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const navigate = useNavigate(); 
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(()=>{
     if(file){
@@ -64,10 +66,16 @@ const Profile = () => {
       const data = await res.json()
       if(data.success === false){
         dispatch(updateUserFailure(data.message));
+        enqueueSnackbar("There was an error updating the user. Try again.", {
+          variant: "error",
+        });
         return;
       }
       dispatch(updateUserSuccess(data));
       setSuccess(true);
+      enqueueSnackbar("Succesfully updated.", {
+        variant: "success",
+      });
       // navigate("/");
     } catch (error) {
       dispatch(updateUserFailure(error.message));
@@ -83,9 +91,15 @@ const Profile = () => {
       const data = await res.json();
       if(data.success === false){
         dispatch(deleteUserFailure(data.message));
+        enqueueSnackbar("There was an error deleting the user. Try again.", {
+          variant: "error",
+        });
         return;
       }
       dispatch(deleteUserSuccess());
+      enqueueSnackbar("Succesfully deleted the user.", {
+        variant: "success",
+      });
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }
@@ -100,9 +114,13 @@ const Profile = () => {
       const data = await res.json();
       if (data.success === false) {
         dispatch(signOutUserFailure(data.message));
+        enqueueSnackbar('There was an error signing out. Try again.', {variant: 'error'});
         return;
       }
       dispatch(signOutUserSuccess());
+      enqueueSnackbar("Signed out succesfully.", {
+        variant: "success",
+      });
     } catch (error) {
       dispatch(signOutUserFailure(error.message));
     }
@@ -170,8 +188,8 @@ const Profile = () => {
         <span onClick={handleDelete} className="text-red-700 cursor-pointer">Delete Account</span>
         <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign Out</span>
       </div>
-      <p className="text-red-700 mt-5 text-center">{error ? error : ""}</p>
-      <p className="text-green-700 mt-5 text-center">{success ? 'Updated succesfully.' : ""}</p>
+      {/* <p className="text-red-700 mt-5 text-center">{error ? error : ""}</p>
+      <p className="text-green-700 mt-5 text-center">{success ? 'Updated succesfully.' : ""}</p> */}
     </div>
   );
 }

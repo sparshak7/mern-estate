@@ -7,12 +7,14 @@ import {
   signInFailure,
 } from "../redux/user/userSlice";
 import OAuth from "../components/OAuth";
+import { useSnackbar } from "notistack";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
   const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {enqueueSnackbar} = useSnackbar();
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -33,10 +35,16 @@ const SignIn = () => {
       const data = await res.json();
       if (data.success === false) {
         dispatch(signInFailure(data.message));
+        enqueueSnackbar("There was an error signing in. Try again.", {
+          variant: "error",
+        });
         return;
       }
       dispatch(signInSuccess(data));
       navigate("/");
+      enqueueSnackbar("Succesfully signed in.", {
+        variant: "success",
+      });
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
@@ -74,7 +82,7 @@ const SignIn = () => {
           <span className="text-blue-700">Sign Up.</span>
         </Link>
       </div>
-      {error && <p className="text-red-500 mt-5 text-center">{error}</p>}
+      {/* {error && <p className="text-red-500 mt-5 text-center">{error}</p>} */}
     </div>
   );
 };
